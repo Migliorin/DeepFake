@@ -13,6 +13,7 @@ import numpy as np
 import datetime
 import json
 import cv2
+import re
 
 
 np.random.seed(30)
@@ -233,10 +234,11 @@ class Models():
 
 
 class SavePlots():
-    def __init__(self,image_tensor:ImageTensor) -> None:
+    def __init__(self,image_tensor:ImageTensor,name_save:str) -> None:
         self.image_tensor = image_tensor
+        self.name_save = name_save + '_' + re.sub(r"\.[0-9]+","",str(datetime.datetime.now())).replace(":","-").replace(" ","_")
 
-    def plotModelHistory(self,h:Sequential,name:str)->None:
+    def plotModelHistory(self,h:Sequential)->None:
         path = self.image_tensor.path_plots
 
         if(not os.path.exists(path)):
@@ -254,12 +256,10 @@ class SavePlots():
             ax[1].legend(['categorical_accuracy','val_categorical_accuracy'])
             ax[1].title.set_text("Train accuracy vs Validation accuracy")
             
-            curr_dt_time = datetime.datetime.now()
+            
+            plt.savefig(f"{path}/{self.name_save}")
 
-            name = name + '_' + str(curr_dt_time).replace(' ','').replace(':','_')
-            plt.savefig(f"{path}/{name}")
-
-            with open(f'{path}/{name}.json', 'w+', encoding='utf-8') as f:
+            with open(f'{path}/{self.name_save}.json', 'w+', encoding='utf-8') as f:
                 json.dump({
                     "categorical_accuracy": float(max(h.history['categorical_accuracy'])),
                     "val_categorical_accuracy": float(max(h.history['val_categorical_accuracy']))
@@ -272,18 +272,14 @@ class SavePlots():
         except Exception as e:
             print(f"Erro ao salvar graficos: {e}")
 
-    def plotAtributos(self,name:str)->None:
+    def plotAtributos(self)->None:
         path = self.image_tensor.path_plots
 
         if(not os.path.exists(path)):
             os.mkdir(path)
 
-        curr_dt_time = datetime.datetime.now()
-
-        name = name + '_' + str(curr_dt_time).replace(' ','').replace(':','_')
-
         try:
-            with open(f'{path}/{name}.json', 'w+', encoding='utf-8') as f:
+            with open(f'{path}/{self.name_save}.json', 'w+', encoding='utf-8') as f:
                     json.dump(self.image_tensor.get_atributos(),
                     f,
                     ensure_ascii=False,

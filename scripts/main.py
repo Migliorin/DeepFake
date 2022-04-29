@@ -67,12 +67,13 @@ class MainClass():
         image_tensor = ImageTensor()
         image_tensor.switch_image_tensor_49()
 
-        save_plots = SavePlots(image_tensor)
 
         BATCH_SIZE = image_tensor.batch_size
         EPOCHS = image_tensor.epochs
         PATH = image_tensor.path
         NAME = "MODELO_TESTE_49"
+        
+        save_plots = SavePlots(image_tensor,NAME)
         
         train_metadata = pd.read_csv(f"{PATH}/metadata.csv")
 
@@ -117,8 +118,8 @@ class MainClass():
             initial_epoch=0
             )
 
-        save_plots.plotModelHistory(model.history,NAME)
-        save_plots.plotAtributos(NAME)
+        save_plots.plotModelHistory(model.history)
+        save_plots.plotAtributos()
 
 
 if __name__ == "__main__":
