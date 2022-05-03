@@ -61,7 +61,7 @@ class ImageTensor():
             "batch_size"    : self.batch_size,
             "epochs"        : self.epochs,
             "dim_color"     : self.dim_color,
-            "img_idx"       : list(self.img_idx)
+            "img_idx"       : [int(x) for x in self.img_idx]
         }
 
 
