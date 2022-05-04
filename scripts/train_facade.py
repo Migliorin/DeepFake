@@ -279,7 +279,7 @@ class SavePlots():
             os.mkdir(path)
 
         try:
-            with open(f'{path}/{self.name_save}.json', 'w+', encoding='utf-8') as f:
+            with open(f'{path}/{self.name_save}_atributos.json', 'w+', encoding='utf-8') as f:
                     json.dump(self.image_tensor.get_atributos(),
                     f,
                     ensure_ascii=False,

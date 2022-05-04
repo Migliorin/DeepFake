@@ -199,9 +199,28 @@ class MainClass():
             "../datasets/dfdc_train_part_48"
             )
 
+    def main_test_48_01(self):
+        image_tensor = ImageTensor()
+        image_tensor.switch_image_tensor_49()
+
+        NAME = "MODELO_TESTE_49"
+        save_plots = SavePlots(image_tensor,NAME)
+        pre_process_video = PreProcessVideo(image_tensor)
+
+        test_metadata = pd.read_json(f"../datasets/dfdc_train_part_48/metadata.json")
+        test_metadata = test_metadata.T
+        test_metadata.reset_index(inplace=True)
+        test_metadata.rename({"index":"name"},axis=1,inplace=True)
+
+        test = MakeTest(pre_process_video,save_plots,test_metadata)
+        test.teste_2(
+            "./MODELO_TESTE_49_2022-05-0316_10_45.606091/model-00010-0.58094-0.71925-0.63546-0.68254.h5",
+            "../datasets/dfdc_train_part_48"
+            )
+
 if __name__ == "__main__":
 
     main_ = MainClass()
-    main_.main_train_49_01()
-    # main_.main_train_49()
+    # main_.main_train_49_01()
+    main_.main_test_48()
 
