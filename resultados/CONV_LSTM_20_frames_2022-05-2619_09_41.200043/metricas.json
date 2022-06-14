@@ -1,0 +1,6 @@
+{
+    "acuracia": 0.6,
+    "recall_fake": 0.56,
+    "reacll_real": 0.65,
+    "f1_score": 0.6086956521739131
+}
