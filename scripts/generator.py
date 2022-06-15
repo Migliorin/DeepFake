@@ -63,6 +63,11 @@ class DataGenerator(Sequence):
         X = np.zeros((self.batch_size,  self.frames ,*self.dim, self.n_channels),dtype=np.uint8)
         y = np.zeros((self.batch_size,self.n_classes), dtype=np.float32)
 
+        def rescale_img(img:np.array):
+            img = img.astype(np.float32) / 255.0
+            img = (img - 0.5) * 2
+            return img
+
         def pre_process_video(path:str):
             if(not os.path.exists(path)):
                 raise Exception(f"Arquivo {path} nao encontrado")
@@ -97,7 +102,7 @@ class DataGenerator(Sequence):
                 
             
             elif(self.n_channels == 3):
-                return np.array(frames) 
+                return rescale_img(np.array(frames)) 
 
 
         # Generate data

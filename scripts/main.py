@@ -3,7 +3,7 @@ os.environ["CUDA_VISIBLE_DEVICES"]="1"
 
 import sys
 
-sys.setrecursionlimit(5000)
+sys.setrecursionlimit(10000)
 
 from generator import *
 from callback import *
@@ -28,7 +28,7 @@ EPOCHS = 64
 params = {
     "len_frames"   :290,
     "frames"       :FRAMES,
-    "batch_size"   :10,
+    "batch_size"   :3,
     "dim"          :(480,480),
     "n_channels"   :3,
     "n_classes"    :2,
@@ -60,7 +60,7 @@ model = model.EfficientNetV2L(inputShape=(
 )
 
 callback = Callback()
-callback = callback.create_checkpoint(CHECKPOINT_PATH,NAME_MODEL)
+callback = callback.create_checkpoint_with_weights(CHECKPOINT_PATH,NAME_MODEL)
 print(f"{simbol*5} Concluido {simbol*5}\n")
 
 
